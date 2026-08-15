@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
 import logoImg from "@/img/5V5A1364.png";
@@ -43,6 +43,28 @@ const materiais = [
 export default function Home() {
   const [enviado, setEnviado] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    const sections = document.querySelectorAll("section");
+    sections.forEach((section, index) => {
+      // Pula a primeira seção (Hero) para ela já nascer visível
+      if (index > 0) {
+        section.classList.add("reveal");
+        observer.observe(section);
+      }
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -140,7 +162,7 @@ export default function Home() {
               <a href="#propostas" className="inline-flex justify-center items-center bg-transparent border-2 border-white/35 text-white font-archivo font-bold text-[17px] px-[28px] py-[17px] rounded-lg hover:border-[#FFC400] hover:text-[#FFC400] transition-colors w-full sm:w-auto">Ver as propostas</a>
             </div>
           </div>
-          <div className="relative self-end h-[480px] md:h-[650px] w-full md:w-[85%] mx-auto md:ml-auto mt-6 md:mt-0">
+          <div className="relative self-end h-[540px] md:h-[650px] w-full md:w-[85%] mx-auto md:ml-auto mt-6 md:mt-0">
             <Image src={heroImg} alt="Itamar Leão Principal" fill className="object-cover object-bottom" priority />
           </div>
         </div>
