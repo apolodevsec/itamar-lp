@@ -43,6 +43,23 @@ const materiais = [
 export default function Home() {
   const [enviado, setEnviado] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showMobileBtn, setShowMobileBtn] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const propostasSection = document.getElementById("quem-sou");
+      if (propostasSection) {
+        if (window.scrollY >= propostasSection.offsetTop - window.innerHeight / 1.5) {
+          setShowMobileBtn(true);
+        } else {
+          setShowMobileBtn(false);
+        }
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -384,7 +401,7 @@ export default function Home() {
       </a>
 
       {/* Mobile Fixed Bottom Button */}
-      <div className="fixed bottom-0 left-0 right-0 z-[90] md:hidden bg-[#062A5E] border-t-2 border-[#FFC400] p-3" style={{ paddingBottom: 'calc(0.75rem + env(safe-area-inset-bottom, 0px))' }}>
+      <div className={`fixed bottom-0 left-0 right-0 z-[90] md:hidden bg-[#062A5E] border-t-2 border-[#FFC400] p-3 transition-transform duration-500 ease-in-out ${showMobileBtn ? 'translate-y-0' : 'translate-y-full'}`} style={{ paddingBottom: 'calc(0.75rem + env(safe-area-inset-bottom, 0px))' }}>
         <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="flex w-full h-[54px] gap-2">
           <div className="flex-[4] bg-[#FFC400] rounded-lg flex items-center justify-center shadow-lg transition-colors">
             <span className="font-archivo font-black text-[16px] tracking-[0.06em] text-[#062A5E]">
