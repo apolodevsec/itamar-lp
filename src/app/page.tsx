@@ -9,11 +9,11 @@ import bioImg from "@/img/5V5A1389.png";
 import municipiosImg from "@/img/5V5A1295.png";
 import marconiImg from "@/img/5V5A1297.png";
 
-const whatsappUrl = "https://wa.me/5562000000000";
-const instagramUrl = "https://instagram.com/";
-const facebookUrl = "https://facebook.com/";
+const whatsappUrl = "https://wa.me/5562982683987";
+const instagramUrl = "https://www.instagram.com/itamarleao45";
+const facebookUrl = "https://www.facebook.com/itamarleaosanclerlandia";
 const materialUrl = "#";
-const cnpjCampanha = "XX.XXX.XXX/0001-XX";
+const cnpjCampanha = "68.519.226/0001-37";
 const empresaResponsavel = "[Nome da Empresa/Agência]";
 const cnpjEmpresa = "YY.YYY.YYY/0001-YY";
 
@@ -42,6 +42,7 @@ const materiais = [
 
 export default function Home() {
   const [enviado, setEnviado] = useState(false);
+  const [enviando, setEnviando] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showMobileBtn, setShowMobileBtn] = useState(false);
 
@@ -83,9 +84,28 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setEnviado(true);
+    setEnviando(true);
+    
+    const formData = new FormData(e.currentTarget);
+    const dados = new FormData();
+    
+    dados.append("nome", formData.get("nome") as string);
+    dados.append("telefone", formData.get("whatsapp") as string);
+    dados.append("cidade", formData.get("cidade") as string);
+    dados.append("consentimento", formData.get("lgpd") ? "true" : "false");
+
+    const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbxXNFIb3LEd3sdOLGxcKvgXkYAFLZS3L5ilnmlpT8FgOvu6AmPm9pYTlCOjyFs3O8dK/exec";
+
+    try {
+      await fetch(URL_SCRIPT, { method: "POST", body: dados });
+      setEnviado(true);
+    } catch (erro) {
+      alert("Ocorreu um erro. Tente novamente.");
+    } finally {
+      setEnviando(false);
+    }
   };
 
   return (
@@ -331,17 +351,20 @@ export default function Home() {
           <div className="bg-white rounded-2xl p-6 md:p-[38px_34px_34px] border-b-[6px] border-[#FFC400]">
             <div className="font-archivo font-black text-[26px] text-[#062A5E] tracking-[-0.02em]">Receba as novidades da campanha</div>
             <p className="font-barlow text-[16.5px] leading-[1.55] text-[#5A6C84] my-3">Agenda, propostas, encontros e os principais momentos desta caminhada por Goiás.</p>
-            <form onSubmit={onSubmit} className="flex flex-col gap-3">
-              <input required name="nome" placeholder="Seu nome completo" className="font-barlow text-[16px] p-[15px_16px] border-[1.5px] border-[#DCE3ED] rounded-lg outline-none text-[#0B1B33] focus:border-[#0B4FA8] transition-colors" />
-              <input required name="whatsapp" placeholder="WhatsApp com DDD" className="font-barlow text-[16px] p-[15px_16px] border-[1.5px] border-[#DCE3ED] rounded-lg outline-none text-[#0B1B33] focus:border-[#0B4FA8] transition-colors" />
-              <input required name="cidade" placeholder="Sua cidade" className="font-barlow text-[16px] p-[15px_16px] border-[1.5px] border-[#DCE3ED] rounded-lg outline-none text-[#0B1B33] focus:border-[#0B4FA8] transition-colors" />
-              <label className="flex gap-2.5 items-start font-barlow text-[13.5px] leading-[1.5] text-[#5A6C84] mt-1 cursor-pointer">
-                <input type="checkbox" required className="mt-[3px] accent-[#0B4FA8] w-4 h-4 cursor-pointer" />
-                <span>Autorizo o contato da campanha e o tratamento dos meus dados conforme a LGPD (Lei nº 13.709/2018).</span>
-              </label>
-              <button type="submit" className="mt-1.5 font-archivo font-black text-[16px] text-white bg-[#062A5E] border-none p-[17px] rounded-lg cursor-pointer hover:bg-[#0B4FA8] transition-colors">➜ QUERO RECEBER AS NOVIDADES</button>
-            </form>
-            {enviado && (
+            {!enviado ? (
+              <form onSubmit={onSubmit} className="flex flex-col gap-3">
+                <input required name="nome" placeholder="Seu nome completo" className="font-barlow text-[16px] p-[15px_16px] border-[1.5px] border-[#DCE3ED] rounded-lg outline-none text-[#0B1B33] focus:border-[#0B4FA8] transition-colors" />
+                <input required name="whatsapp" placeholder="WhatsApp com DDD" className="font-barlow text-[16px] p-[15px_16px] border-[1.5px] border-[#DCE3ED] rounded-lg outline-none text-[#0B1B33] focus:border-[#0B4FA8] transition-colors" />
+                <input required name="cidade" placeholder="Sua cidade" className="font-barlow text-[16px] p-[15px_16px] border-[1.5px] border-[#DCE3ED] rounded-lg outline-none text-[#0B1B33] focus:border-[#0B4FA8] transition-colors" />
+                <label className="flex gap-2.5 items-start font-barlow text-[13.5px] leading-[1.5] text-[#5A6C84] mt-1 cursor-pointer">
+                  <input type="checkbox" required name="lgpd" className="mt-[3px] accent-[#0B4FA8] w-4 h-4 cursor-pointer" />
+                  <span>Autorizo o contato da campanha e o tratamento dos meus dados conforme a LGPD (Lei nº 13.709/2018).</span>
+                </label>
+                <button type="submit" disabled={enviando} className="mt-1.5 font-archivo font-black text-[16px] text-white bg-[#062A5E] border-none p-[17px] rounded-lg cursor-pointer hover:bg-[#0B4FA8] transition-colors disabled:opacity-70 disabled:cursor-not-allowed">
+                  {enviando ? "Enviando..." : "➜ QUERO RECEBER AS NOVIDADES"}
+                </button>
+              </form>
+            ) : (
               <div className="mt-3.5 font-barlow font-semibold text-[15px] text-[#0B7A3B]">Cadastro recebido. Obrigado por caminhar com a gente!</div>
             )}
           </div>
@@ -379,7 +402,7 @@ export default function Home() {
               <div className="flex flex-col gap-2.5">
                 <a href="#quem-sou" className="font-barlow text-[15.5px] text-white/70 hover:text-[#FFC400] transition-colors">Quem sou</a>
                 <a href="#propostas" className="font-barlow text-[15.5px] text-white/70 hover:text-[#FFC400] transition-colors">Propostas</a>
-                <a href="#material" className="font-barlow text-[15.5px] text-white/70 hover:text-[#FFC400] transition-colors">Material de campanha</a>
+                <a href="#material" className="font-barlow text-[15.5px] text-white/70 hover:text-[#FFC400] transition-colors">Material de Campanha</a>
                 <a href="#contato" className="font-barlow text-[15.5px] text-white/70 hover:text-[#FFC400] transition-colors">Contato</a>
               </div>
             </div>
