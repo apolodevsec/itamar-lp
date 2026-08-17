@@ -40,6 +40,15 @@ const materiais = [
   { titulo: "Artes para adesivos", texto: "Arquivos autorizados para impressão de adesivos e cartazes.", formato: "ZIP", url: materialUrl }
 ];
 
+const jingles = [
+  { titulo: "Versão Rock", url: "/jingles/rock.mp3" },
+  { titulo: "Versão Universitário", url: "/jingles/universitario.mp3" },
+  { titulo: "Versão Balada", url: "/jingles/balada.mp3" },
+  { titulo: "Versão Eletrônica", url: "/jingles/eletronica.mp3" },
+  { titulo: "Versão Pagode", url: "/jingles/pagode.mp3" },
+  { titulo: "Versão Violão e Sanfona", url: "/jingles/violao-sanfona.mp3" }
+];
+
 export default function Home() {
   const [enviado, setEnviado] = useState(false);
   const [enviando, setEnviando] = useState(false);
@@ -316,7 +325,34 @@ export default function Home() {
           </div>
         </div>
       </section>
-      
+        {/* Jingles */}
+        <section id="jingles" className="bg-white px-6 py-16 md:py-[100px]">
+          <div className="max-w-[1240px] mx-auto">
+            <div className="max-w-[700px] mb-[32px] md:mb-[44px]">
+              <div className="font-barlow font-bold text-[13px] tracking-[0.22em] text-[#0B4FA8] mb-4">JINGLES DA CAMPANHA</div>
+              <h2 className="font-archivo font-black text-4xl md:text-[46px] leading-[1.04] tracking-[-0.03em] text-[#062A5E] m-0">A trilha sonora da nossa caminhada</h2>
+              <p className="font-barlow text-[19px] leading-[1.6] text-[#33465F] mt-[18px]">Ouça e baixe os jingles oficiais da campanha para compartilhar com seus amigos.</p>
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {jingles.map((j, i) => (
+                <div key={i} className="bg-[#F5F6F8] border border-[#E1E6EE] rounded-[14px] p-[28px_24px] flex flex-col gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-[38px] h-[38px] rounded-full bg-[#FFC400] text-[#062A5E] flex items-center justify-center font-archivo font-black text-[18px] leading-none pb-[2px]">♪</div>
+                    <div className="font-archivo font-extrabold text-[19px] text-[#062A5E] tracking-[-0.01em]">{j.titulo}</div>
+                  </div>
+                  <audio controls className="w-full h-10 mt-1 outline-none">
+                    <source src={j.url} type="audio/mpeg" />
+                    Seu navegador não suporta o elemento de áudio.
+                  </audio>
+                  <a href={j.url} download className="mt-1 inline-flex justify-center items-center gap-2 bg-[#062A5E] text-white font-barlow font-bold text-[15px] px-5 py-[11px] rounded-lg hover:bg-[#0B4FA8] transition-colors self-start">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Baixar MP3
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
       {/* Material */}
       <section id="material" className="bg-[#F5F6F8] px-6 py-16 md:py-[100px]">
