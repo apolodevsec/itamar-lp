@@ -14,8 +14,8 @@ const instagramUrl = "https://www.instagram.com/itamarleao45";
 const facebookUrl = "https://www.facebook.com/itamarleaosanclerlandia";
 const materialUrl = "#";
 const cnpjCampanha = "68.519.226/0001-37";
-const empresaResponsavel = "[Nome da Empresa/Agência]";
-const cnpjEmpresa = "YY.YYY.YYY/0001-YY";
+const empresaResponsavel = "Salvatore Comunicação LTDA";
+const cnpjEmpresa = "48.330.675/0001-25";
 
 const razoes = [
   { n: "01", titulo: "Experiência para representar", texto: "Conhecimento de gestão pública e dos desafios enfrentados pelos municípios." },
@@ -54,6 +54,18 @@ export default function Home() {
   const [enviando, setEnviando] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showMobileBtn, setShowMobileBtn] = useState(false);
+  const [isJinglesModalOpen, setIsJinglesModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (isJinglesModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isJinglesModalOpen]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -325,35 +337,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-        {/* Jingles */}
-        <section id="jingles" className="bg-white px-6 py-16 md:py-[100px]">
-          <div className="max-w-[1240px] mx-auto">
-            <div className="max-w-[700px] mb-[32px] md:mb-[44px]">
-              <div className="font-barlow font-bold text-[13px] tracking-[0.22em] text-[#0B4FA8] mb-4">JINGLES DA CAMPANHA</div>
-              <h2 className="font-archivo font-black text-4xl md:text-[46px] leading-[1.04] tracking-[-0.03em] text-[#062A5E] m-0">A trilha sonora da nossa caminhada</h2>
-              <p className="font-barlow text-[19px] leading-[1.6] text-[#33465F] mt-[18px]">Ouça e baixe os jingles oficiais da campanha para compartilhar com seus amigos.</p>
-            </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {jingles.map((j, i) => (
-                <div key={i} className="bg-[#F5F6F8] border border-[#E1E6EE] rounded-[14px] p-[28px_24px] flex flex-col gap-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-[38px] h-[38px] rounded-full bg-[#FFC400] text-[#062A5E] flex items-center justify-center font-archivo font-black text-[18px] leading-none pb-[2px]">♪</div>
-                    <div className="font-archivo font-extrabold text-[19px] text-[#062A5E] tracking-[-0.01em]">{j.titulo}</div>
-                  </div>
-                  <audio controls className="w-full h-10 mt-1 outline-none">
-                    <source src={j.url} type="audio/mpeg" />
-                    Seu navegador não suporta o elemento de áudio.
-                  </audio>
-                  <a href={j.url} download className="mt-1 inline-flex justify-center items-center gap-2 bg-[#062A5E] text-white font-barlow font-bold text-[15px] px-5 py-[11px] rounded-lg hover:bg-[#0B4FA8] transition-colors self-start">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    Baixar MP3
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
       {/* Material */}
       <section id="material" className="bg-[#F5F6F8] px-6 py-16 md:py-[100px]">
         <div className="max-w-[1240px] mx-auto">
@@ -363,6 +346,15 @@ export default function Home() {
             <p className="font-barlow text-[19px] leading-[1.6] text-[#33465F] mt-[18px]">Baixe os materiais oficiais autorizados e compartilhe nas suas redes, no seu bairro e na sua cidade.</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-[18px]">
+            {/* Botão Jingles (Abre Modal) */}
+            <button onClick={() => setIsJinglesModalOpen(true)} className="bg-white border border-[#E1E6EE] rounded-[14px] p-[28px_24px_30px] flex flex-col gap-3 hover:border-[#0B4FA8] hover:shadow-[0_12px_28px_rgba(6,42,94,.1)] transition-all text-left cursor-pointer group">
+              <div className="flex justify-between items-start w-full">
+                <div className="w-[38px] h-[38px] rounded-lg bg-[#F2F6FC] text-[#0B4FA8] grid place-items-center font-archivo font-black text-[18px] pb-[2px] group-hover:bg-[#0B4FA8] group-hover:text-white transition-colors">♪</div>
+              </div>
+              <div className="font-archivo font-extrabold text-[19px] text-[#062A5E] tracking-[-0.01em]">Jingles da Campanha</div>
+              <div className="font-barlow text-[15.5px] leading-[1.5] text-[#5A6C84]">Ouça e baixe a trilha sonora oficial da nossa caminhada.</div>
+              <div className="font-barlow font-semibold text-[12px] tracking-[0.14em] text-[#9AA8BC] mt-auto pt-3.5">ÁUDIO MP3 · MATERIAL GERADO POR IA</div>
+            </button>
             {materiais.map((m, i) => (
               <a key={i} href={m.url} download className="bg-white border border-[#E1E6EE] rounded-[14px] p-[28px_24px_30px] flex flex-col gap-3 hover:border-[#0B4FA8] hover:shadow-[0_12px_28px_rgba(6,42,94,.1)] transition-all">
                 <div className="w-[38px] h-[38px] rounded-lg bg-[#F2F6FC] text-[#0B4FA8] grid place-items-center font-archivo font-black text-[16px]">↓</div>
@@ -472,6 +464,46 @@ export default function Home() {
           </div>
         </a>
       </div>
+
+      {/* Jingles Modal */}
+      {isJinglesModalOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-[#062A5E]/80 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl w-full max-w-[900px] max-h-[90vh] overflow-y-auto shadow-2xl flex flex-col relative animate-fade-in-up">
+            <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-md px-6 sm:px-10 pt-6 sm:pt-10 pb-5 border-b border-[#E1E6EE] flex justify-between items-start">
+              <div>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="font-barlow font-bold text-[14px] tracking-[0.22em] text-[#0B4FA8]">JINGLES DA CAMPANHA</div>
+                  <div className="bg-[#FFC400]/20 text-[#062A5E] font-barlow font-bold text-[12px] px-2 py-1 rounded tracking-[0.08em] border border-[#FFC400]/40">MATERIAL GERADO POR IA</div>
+                </div>
+                <h2 className="font-archivo font-black text-3xl sm:text-[34px] leading-[1.05] tracking-[-0.03em] text-[#062A5E] m-0">A trilha sonora da nossa caminhada</h2>
+              </div>
+              <button onClick={() => setIsJinglesModalOpen(false)} className="w-10 h-10 rounded-full bg-[#F5F6F8] text-[#062A5E] flex items-center justify-center hover:bg-[#E1E6EE] transition-colors shrink-0 ml-4 mt-1">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+              </button>
+            </div>
+            <div className="p-6 sm:p-10 pt-6 sm:pt-8">
+              <div className="grid md:grid-cols-2 gap-4 sm:gap-5">
+                {jingles.map((j, i) => (
+                  <div key={i} className="bg-[#F5F6F8] border border-[#E1E6EE] rounded-[14px] p-5 sm:p-[28px_24px] flex flex-col gap-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-[38px] h-[38px] rounded-full bg-[#FFC400] text-[#062A5E] flex items-center justify-center font-archivo font-black text-[18px] leading-none pb-[2px] shrink-0">♪</div>
+                      <div className="font-archivo font-extrabold text-[18px] sm:text-[19px] text-[#062A5E] tracking-[-0.01em]">{j.titulo}</div>
+                    </div>
+                    <audio controls className="w-full h-10 mt-1 outline-none">
+                      <source src={j.url} type="audio/mpeg" />
+                      Seu navegador não suporta o elemento de áudio.
+                    </audio>
+                    <a href={j.url} download className="mt-1 inline-flex justify-center items-center gap-2 bg-[#062A5E] text-white font-barlow font-bold text-[14px] sm:text-[15px] px-5 py-[11px] rounded-lg hover:bg-[#0B4FA8] transition-colors self-start">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                      Baixar MP3
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
