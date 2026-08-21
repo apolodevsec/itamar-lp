@@ -44,3 +44,5 @@ next-env.d.ts
 extracted_*
 unpack.js
 
+# large files
+public/adesivos/O federal do Marconi  retangular.pdf

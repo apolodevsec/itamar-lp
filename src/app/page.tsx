@@ -34,10 +34,26 @@ const prioridades = [
 ];
 
 const materiais = [
-  { titulo: "Santinhos virtuais", texto: "Artes prontas para enviar no WhatsApp e nos grupos da sua cidade.", formato: "PNG · JPEG", url: materialUrl },
-  { titulo: "Foto de perfil", texto: "Molduras e avatares para Instagram, Facebook e WhatsApp.", formato: "PNG", url: materialUrl },
-  { titulo: "Propostas e prioridades", texto: "Documento com as bandeiras da candidatura para Goiás.", formato: "PDF", url: materialUrl },
-  { titulo: "Artes para adesivos", texto: "Arquivos autorizados para impressão de adesivos e cartazes.", formato: "ZIP", url: materialUrl }
+  { titulo: "Foto de perfil", texto: "Molduras e avatares para Instagram, Facebook e WhatsApp.", formato: "PNG", url: "/molduras.zip" },
+  { titulo: "Propostas e prioridades", texto: "Documento com as bandeiras da candidatura para Goiás.", formato: "PDF", url: materialUrl }
+];
+
+const santinhos = [
+  { titulo: "Bandeira 1", texto: "Arquivo para impressão.", formato: "PDF", url: "/santinhos/bandeira_1.pdf" },
+  { titulo: "Bandeira 2", texto: "Arquivo para impressão.", formato: "PDF", url: "/santinhos/bandeira_2.pdf" },
+  { titulo: "Bandeira 3", texto: "Arquivo para impressão.", formato: "PDF", url: "/santinhos/bandeira_3.pdf" },
+  { titulo: "Bandeira 4", texto: "Arquivo para impressão.", formato: "PDF", url: "/santinhos/bandeira_4.pdf" },
+  { titulo: "Santinho 1", texto: "Arte para compartilhar.", formato: "JPG", url: "/santinhos/santinho_1.jpg" },
+  { titulo: "Santinho 2", texto: "Arte para compartilhar.", formato: "JPG", url: "/santinhos/santinho_2.jpg" },
+  { titulo: "Santinho 3", texto: "Arte para compartilhar.", formato: "JPG", url: "/santinhos/santinho_3.jpg" }
+];
+
+const adesivos = [
+  { titulo: "Adesivo 1", texto: "Firme, leal e presente.", formato: "PDF", url: "/adesivos/Adesivo%20redondo%20Firme,%20leal%20e%20presente.pdf" },
+  { titulo: "Adesivo 2", texto: "Arquivo para impressão.", formato: "PDF", url: "/adesivos/Cola%20frente.pdf" },
+  { titulo: "Adesivo 3", texto: "Arquivo para impressão.", formato: "PDF", url: "/adesivos/Cola%20verso.pdf" },
+  { titulo: "Adesivo 4", texto: "Arquivo para impressão.", formato: "PDF", url: "/adesivos/O%20federal%20do%20Marconi%20%20retangular.pdf" },
+  { titulo: "Adesivo 5", texto: "Arquivo para impressão.", formato: "PDF", url: "/adesivos/O%20federal%20do%20Marconi%20redondo.pdf" }
 ];
 
 const jingles = [
@@ -55,9 +71,11 @@ export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showMobileBtn, setShowMobileBtn] = useState(false);
   const [isJinglesModalOpen, setIsJinglesModalOpen] = useState(false);
+  const [isAdesivosModalOpen, setIsAdesivosModalOpen] = useState(false);
+  const [isSantinhosModalOpen, setIsSantinhosModalOpen] = useState(false);
 
   useEffect(() => {
-    if (isJinglesModalOpen) {
+    if (isJinglesModalOpen || isAdesivosModalOpen || isSantinhosModalOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -65,7 +83,7 @@ export default function Home() {
     return () => {
       document.body.style.overflow = "";
     };
-  }, [isJinglesModalOpen]);
+  }, [isJinglesModalOpen, isAdesivosModalOpen, isSantinhosModalOpen]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -355,6 +373,24 @@ export default function Home() {
               <div className="font-barlow text-[15.5px] leading-[1.5] text-[#5A6C84]">Ouça e baixe a trilha sonora oficial da nossa caminhada.</div>
               <div className="font-barlow font-semibold text-[12px] tracking-[0.14em] text-[#9AA8BC] mt-auto pt-3.5">ÁUDIO MP3 · MATERIAL GERADO POR IA</div>
             </button>
+            {/* Botão Adesivos (Abre Modal) */}
+            <button onClick={() => setIsAdesivosModalOpen(true)} className="bg-white border border-[#E1E6EE] rounded-[14px] p-[28px_24px_30px] flex flex-col gap-3 hover:border-[#0B4FA8] hover:shadow-[0_12px_28px_rgba(6,42,94,.1)] transition-all text-left cursor-pointer group">
+              <div className="flex justify-between items-start w-full">
+                <div className="w-[38px] h-[38px] rounded-lg bg-[#F2F6FC] text-[#0B4FA8] grid place-items-center font-archivo font-black text-[18px] pb-[2px] group-hover:bg-[#0B4FA8] group-hover:text-white transition-colors">↓</div>
+              </div>
+              <div className="font-archivo font-extrabold text-[19px] text-[#062A5E] tracking-[-0.01em]">Artes para adesivos</div>
+              <div className="font-barlow text-[15.5px] leading-[1.5] text-[#5A6C84]">Arquivos autorizados para impressão de adesivos e cartazes.</div>
+              <div className="font-barlow font-semibold text-[12px] tracking-[0.14em] text-[#9AA8BC] mt-auto pt-3.5">PDF · VÁRIOS FORMATOS</div>
+            </button>
+            {/* Botão Santinhos (Abre Modal) */}
+            <button onClick={() => setIsSantinhosModalOpen(true)} className="bg-white border border-[#E1E6EE] rounded-[14px] p-[28px_24px_30px] flex flex-col gap-3 hover:border-[#0B4FA8] hover:shadow-[0_12px_28px_rgba(6,42,94,.1)] transition-all text-left cursor-pointer group">
+              <div className="flex justify-between items-start w-full">
+                <div className="w-[38px] h-[38px] rounded-lg bg-[#F2F6FC] text-[#0B4FA8] grid place-items-center font-archivo font-black text-[18px] pb-[2px] group-hover:bg-[#0B4FA8] group-hover:text-white transition-colors">↓</div>
+              </div>
+              <div className="font-archivo font-extrabold text-[19px] text-[#062A5E] tracking-[-0.01em]">Santinhos e Bandeiras</div>
+              <div className="font-barlow text-[15.5px] leading-[1.5] text-[#5A6C84]">Artes prontas para enviar no WhatsApp e grupos da cidade.</div>
+              <div className="font-barlow font-semibold text-[12px] tracking-[0.14em] text-[#9AA8BC] mt-auto pt-3.5">PDF E JPG · VÁRIOS FORMATOS</div>
+            </button>
             {materiais.map((m, i) => (
               <a key={i} href={m.url} download className="bg-white border border-[#E1E6EE] rounded-[14px] p-[28px_24px_30px] flex flex-col gap-3 hover:border-[#0B4FA8] hover:shadow-[0_12px_28px_rgba(6,42,94,.1)] transition-all">
                 <div className="w-[38px] h-[38px] rounded-lg bg-[#F2F6FC] text-[#0B4FA8] grid place-items-center font-archivo font-black text-[16px]">↓</div>
@@ -496,6 +532,74 @@ export default function Home() {
                     <a href={j.url} download className="mt-1 inline-flex justify-center items-center gap-2 bg-[#062A5E] text-white font-barlow font-bold text-[14px] sm:text-[15px] px-5 py-[11px] rounded-lg hover:bg-[#0B4FA8] transition-colors self-start">
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                       Baixar MP3
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Adesivos Modal */}
+      {isAdesivosModalOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-[#062A5E]/80 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl w-full max-w-[900px] max-h-[90vh] overflow-y-auto shadow-2xl flex flex-col relative animate-fade-in-up">
+            <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-md px-6 sm:px-10 pt-6 sm:pt-10 pb-5 border-b border-[#E1E6EE] flex justify-between items-start">
+              <div>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="font-barlow font-bold text-[14px] tracking-[0.22em] text-[#0B4FA8]">ARTES PARA ADESIVOS</div>
+                </div>
+                <h2 className="font-archivo font-black text-3xl sm:text-[34px] leading-[1.05] tracking-[-0.03em] text-[#062A5E] m-0">Baixe os arquivos para impressão</h2>
+              </div>
+              <button onClick={() => setIsAdesivosModalOpen(false)} className="w-10 h-10 rounded-full bg-[#F5F6F8] text-[#062A5E] flex items-center justify-center hover:bg-[#E1E6EE] transition-colors shrink-0 ml-4 mt-1">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+              </button>
+            </div>
+            <div className="p-6 sm:p-10 pt-6 sm:pt-8">
+              <div className="grid md:grid-cols-2 gap-4 sm:gap-5">
+                {adesivos.map((a, i) => (
+                  <div key={i} className="bg-[#F5F6F8] border border-[#E1E6EE] rounded-[14px] p-5 sm:p-[28px_24px] flex flex-col gap-4">
+                    <div className="flex flex-col gap-1.5">
+                      <div className="font-archivo font-extrabold text-[18px] sm:text-[19px] text-[#062A5E] tracking-[-0.01em]">{a.titulo}</div>
+                      <div className="font-barlow text-[14.5px] leading-[1.5] text-[#5A6C84]">{a.texto}</div>
+                    </div>
+                    <a href={a.url} download className="mt-auto inline-flex justify-center items-center gap-2 bg-[#062A5E] text-white font-barlow font-bold text-[14px] sm:text-[15px] px-5 py-[11px] rounded-lg hover:bg-[#0B4FA8] transition-colors self-start">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                      Baixar {a.formato}
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Santinhos Modal */}
+      {isSantinhosModalOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-[#062A5E]/80 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl w-full max-w-[900px] max-h-[90vh] overflow-y-auto shadow-2xl flex flex-col relative animate-fade-in-up">
+            <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-md px-6 sm:px-10 pt-6 sm:pt-10 pb-5 border-b border-[#E1E6EE] flex justify-between items-start">
+              <div>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="font-barlow font-bold text-[14px] tracking-[0.22em] text-[#0B4FA8]">SANTINHOS E BANDEIRAS</div>
+                </div>
+                <h2 className="font-archivo font-black text-3xl sm:text-[34px] leading-[1.05] tracking-[-0.03em] text-[#062A5E] m-0">Baixe os arquivos para compartilhar</h2>
+              </div>
+              <button onClick={() => setIsSantinhosModalOpen(false)} className="w-10 h-10 rounded-full bg-[#F5F6F8] text-[#062A5E] flex items-center justify-center hover:bg-[#E1E6EE] transition-colors shrink-0 ml-4 mt-1">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+              </button>
+            </div>
+            <div className="p-6 sm:p-10 pt-6 sm:pt-8">
+              <div className="grid md:grid-cols-2 gap-4 sm:gap-5">
+                {santinhos.map((s, i) => (
+                  <div key={i} className="bg-[#F5F6F8] border border-[#E1E6EE] rounded-[14px] p-5 sm:p-[28px_24px] flex flex-col gap-4">
+                    <div className="flex flex-col gap-1.5">
+                      <div className="font-archivo font-extrabold text-[18px] sm:text-[19px] text-[#062A5E] tracking-[-0.01em]">{s.titulo}</div>
+                      <div className="font-barlow text-[14.5px] leading-[1.5] text-[#5A6C84]">{s.texto}</div>
+                    </div>
+                    <a href={s.url} download className="mt-auto inline-flex justify-center items-center gap-2 bg-[#062A5E] text-white font-barlow font-bold text-[14px] sm:text-[15px] px-5 py-[11px] rounded-lg hover:bg-[#0B4FA8] transition-colors self-start">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                      Baixar {s.formato}
                     </a>
                   </div>
                 ))}
